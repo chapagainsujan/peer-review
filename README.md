@@ -27,7 +27,7 @@
 
 ## Overview
 
-**scientific-peer-review** is a [Claude Skill](https://docs.claude.com) that makes Claude review a
+**peer-review** is a [Claude Skill](https://docs.claude.com) that makes Claude review a
 scientific manuscript the way an experienced journal referee would. It evaluates scientific
 validity, finds substantive weaknesses, attaches each comment to the **actual passage** of the
 manuscript, explains **why** the problem matters, and proposes **defensible** fixes, while stating
