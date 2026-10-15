@@ -1,0 +1,199 @@
+{
+  "manuscript": "sample_manuscript.docx",
+  "comments": [
+    {
+      "id": "C-001",
+      "severity": "Critical",
+      "status": "confirmed",
+      "category": "design",
+      "location": {
+        "section": "2.2 Treatments",
+        "block": "P10"
+      },
+      "quote": "Each biochar rate was applied to one greenhouse bench, and six pots per rate were placed on that bench.",
+      "comment": "Biochar rate was applied to whole benches, one bench per rate. Rate is therefore completely confounded with bench (light, temperature and irrigation position can differ between benches), and the six pots on a bench are subsamples of one treatment application, not independent replicates of the rate.",
+      "rationale": "Differences among rates cannot be separated from bench differences, and every P-value based on pots overstates precision (pseudoreplication). This affects all results and both main conclusions.",
+      "required_revision": "State the experimental unit and how benches were assigned and arranged. If benches were not replicated, the study cannot support inference about biochar rate; restrict the paper to a descriptive report with the confounding acknowledged, or repeat the experiment with rates randomised to replicated benches or with pots randomised within benches (blocks).",
+      "evidence_needed": "Greenhouse layout and randomisation procedure; any bench-effect data (e.g. uniform-control pots on each bench)."
+    },
+    {
+      "id": "C-002",
+      "severity": "Major",
+      "status": "confirmed",
+      "category": "statistics",
+      "location": {
+        "section": "2.4 Statistical analysis",
+        "block": "P14"
+      },
+      "quote": "treating each pot-by-date observation as a replicate",
+      "comment": "Crown rot was scored on the same pots at four dates (2.3), yet each pot-by-date observation is analysed as an independent replicate. The reported F(3,92) in 3.2 corresponds to 96 observations (24 pots x 4 dates), confirming that repeated measurements were treated as independent.",
+      "rationale": "Repeated measures on one pot are correlated; treating them as independent inflates the error degrees of freedom and shrinks P-values.",
+      "required_revision": "Analyse with the pot as the unit: for example a repeated-measures or mixed model with pot as a random effect (and a suitable covariance structure), or a per-pot summary such as AUDPC. Report the model structure, assumptions and the df method. Note that the ordinal 0-5 score also needs an appropriate model (see C-007).",
+      "evidence_needed": "Model formula, software and package, diagnostics."
+    },
+    {
+      "id": "C-003",
+      "severity": "Major",
+      "status": "confirmed",
+      "category": "statistics",
+      "location": {
+        "section": "3.1 Grain yield",
+        "block": "P17"
+      },
+      "quote": "F(3,20) = 2.91, P = 0.012",
+      "comment": "F(3,20) = 2.91 corresponds to P of about 0.060 (recomputed; 0.059-0.060 allowing for rounding of F), not 0.012. The reported statistic, df and P cannot all be correct.",
+      "rationale": "At alpha = 0.05 the conclusion changes: with P about 0.06 the omnibus test for yield is not significant, which undermines the statement that biochar rate affected yield and the LSD letters in Table 1.",
+      "required_revision": "Check which value is wrong (statistic, df or P), correct it, and revise the yield conclusions accordingly.",
+      "evidence_needed": "The ANOVA table (SS, MS, df, F, P)."
+    },
+    {
+      "id": "C-004",
+      "severity": "Major",
+      "status": "confirmed",
+      "category": "consistency",
+      "location": {
+        "section": "Abstract",
+        "block": "P3"
+      },
+      "quote": "increased grain yield by 23% relative to the control",
+      "comment": "The abstract reports a 23% yield increase. Table 1 means (4.82 and 5.71 t ha-1) give 18.5% ((5.71-4.82)/4.82), which is also what Section 3.1 states.",
+      "rationale": "The headline quantitative result in the abstract disagrees with the data and the Results text.",
+      "required_revision": "Reconcile the values and state how the percentage was computed (ratio of means, or mean of per-replicate ratios).",
+      "suggested_correction": "Example wording: \"...increased grain yield by [percentage, 95% CI] relative to the control...\"",
+      "evidence_needed": "Per-pot yields."
+    },
+    {
+      "id": "C-005",
+      "severity": "Major",
+      "status": "confirmed",
+      "category": "interpretation",
+      "location": {
+        "section": "4. Discussion",
+        "block": "P25"
+      },
+      "quote": "are explained by improved soil water-holding capacity under biochar",
+      "comment": "Soil water-holding capacity, soil moisture and plant water status were not measured or reported, so the mechanism is a hypothesis, not a result. The statement is also written as established (\"explained by\").",
+      "rationale": "A mechanistic claim without measurements that test it can mislead readers; the same text reappears in the abstract.",
+      "required_revision": "Present water retention as one possible explanation among others (e.g. effects on microbial communities, nutrient availability), or add measurements (soil moisture, water retention curves, plant water status). Adjust the abstract accordingly.",
+      "suggested_correction": "Example wording: \"One possible explanation is improved soil water retention, which was not measured here.\""
+    },
+    {
+      "id": "C-006",
+      "severity": "Major",
+      "status": "confirmed",
+      "category": "interpretation",
+      "location": {
+        "section": "4. Discussion",
+        "block": "P26"
+      },
+      "quote": "biochar should be applied at 10 t ha-1 by farmers to control crown rot and increase yield",
+      "comment": "A farm-level recommendation is drawn from one greenhouse experiment with one cultivar, one isolate and no field validation. The previous sentence of the same paragraph says the results \"may not transfer to field conditions\". The abstract and Conclusions repeat the recommendation without this caveat.",
+      "rationale": "The recommendation exceeds the evidence and contradicts the authors' own stated limitation; it also depends on a yield effect whose significance is in doubt (C-003).",
+      "required_revision": "Limit conclusions to the tested conditions and present agronomic recommendations as hypotheses for field testing; align Abstract, Discussion and Conclusions."
+    },
+    {
+      "id": "C-007",
+      "severity": "Major",
+      "status": "confirmed",
+      "category": "reproducibility",
+      "location": {
+        "section": "2.3 Inoculation and disease assessment",
+        "block": "P12"
+      },
+      "quote": "Plants were inoculated with Fusarium culmorum at tillering.",
+      "comment": "In the files supplied, the inoculation and scoring methods are insufficient to reproduce or interpret the disease data: isolate identity/source, inoculum type and concentration, inoculation method, mock-inoculated controls, the definition of the 0-5 scale, and whether scoring was blinded are not reported. The ordinal 0-5 scores are also analysed as continuous means.",
+      "rationale": "Disease severity is a primary outcome; without these details its validity and reproducibility cannot be judged, and unblinded subjective scoring can bias treatment comparisons.",
+      "required_revision": "Report these details (and any supplement that contains them); state how bias was controlled; justify analysing ordinal scores with ANOVA or use an ordinal model, or a validated conversion to percent area.",
+      "evidence_needed": "Isolate ID, inoculum dose, scale definition or diagrams, blinding statement."
+    },
+    {
+      "id": "C-008",
+      "severity": "Minor",
+      "status": "probable",
+      "category": "statistics",
+      "location": {
+        "section": "2.4 Statistical analysis",
+        "block": "P14"
+      },
+      "quote": "Fisher's LSD test at P < 0.05 for all pairwise comparisons",
+      "comment": "Unadjusted LSD across the six pairwise comparisons inflates the family-wise error rate; its protection also presumes a significant omnibus F, which does not hold if P is about 0.06 (C-003).",
+      "required_revision": "Use a method that controls the family-wise error for the question asked (e.g. Tukey for all pairs, Dunnett for comparisons with the control) or justify LSD."
+    },
+    {
+      "id": "C-009",
+      "severity": "Minor",
+      "status": "confirmed",
+      "category": "figures-tables",
+      "location": {
+        "table": "Table 1",
+        "block": "T0.r1c1"
+      },
+      "quote": "4.82 ± 0.31",
+      "comment": "The dispersion measure after \"±\" is not defined (SD, SE or CI), and the table legend does not state it.",
+      "required_revision": "State the measure in the legend and give n; report mean differences with confidence intervals."
+    },
+    {
+      "id": "C-010",
+      "severity": "Minor",
+      "status": "confirmed",
+      "category": "consistency",
+      "location": {
+        "section": "3.2 Crown rot severity",
+        "block": "P20"
+      },
+      "quote": "decreased with increasing biochar rate",
+      "comment": "The reported means (3.9, 3.4, 2.6, 2.8) are not monotonic: severity is slightly higher at 20 than at 10 t ha-1.",
+      "required_revision": "Describe the pattern accurately (e.g. lowest at 10 t ha-1, no further reduction at 20 t ha-1) and state whether 10 and 20 differ."
+    },
+    {
+      "id": "C-011",
+      "severity": "Minor",
+      "status": "question",
+      "category": "reproducibility",
+      "location": {
+        "section": "2.4 Statistical analysis",
+        "block": "P14"
+      },
+      "quote": "Analyses were done in R.",
+      "comment": "No software version, packages or model code are given, and no data availability statement is included (none seen in the files supplied).",
+      "required_revision": "Report versions and packages, and deposit data and code or state why they cannot be shared (check the journal's data policy)."
+    },
+    {
+      "id": "C-012",
+      "severity": "Minor",
+      "status": "question",
+      "category": "reporting",
+      "location": {
+        "section": "2.3 Inoculation and disease assessment",
+        "block": "P12"
+      },
+      "quote": "converted to t ha-1",
+      "comment": "The conversion from yield per 5 L pot (and from biochar t ha-1 equivalent in Section 2.2) to per-hectare values is not described.",
+      "required_revision": "State the area basis and plant density used for both conversions, and note that pot-based yield extrapolation to field values is approximate."
+    },
+    {
+      "id": "C-013",
+      "severity": "Optional",
+      "status": "suggestion",
+      "category": "statistics",
+      "location": {
+        "section": "3.1 Grain yield",
+        "block": "P17"
+      },
+      "quote": "an increase of 18.5%",
+      "comment": "With four ordered rates, a dose-response analysis (regression on rate, possibly with a plateau) would use the information better than pairwise comparison, and effect estimates with 95% confidence intervals would show the uncertainty.",
+      "required_revision": "Optional: report the estimated difference and 95% CI, and consider a response-curve model once the experimental-unit issue is resolved."
+    },
+    {
+      "id": "C-014",
+      "severity": "Major",
+      "status": "confirmed",
+      "category": "design",
+      "audience": "editor",
+      "location": {
+        "section": "2.2 Treatments"
+      },
+      "comment": "Confidential: in my view the central design problem (one bench per biochar rate) cannot be repaired by rewriting or reanalysis of the existing data; a replicated, randomised experiment is needed. If the journal permits, encourage resubmission after such an experiment. I found no indication of integrity problems; the numerical inconsistencies appear to be reporting errors (C-003, C-004) but the raw data should be requested to confirm."
+    }
+  ]
+}
