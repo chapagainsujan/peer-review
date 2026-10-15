@@ -2,7 +2,7 @@
 
 # 🔬 scientific-peer-review
 
-### An evidence-grounded Claude Skill for rigorous scientific manuscript peer review
+###Claude Skill for rigorous scientific manuscript peer review
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](#changelog)
@@ -10,8 +10,6 @@
 [![Python](https://img.shields.io/badge/python-3.9%2B-3776AB.svg?logo=python&logoColor=white)](#requirements)
 [![Claude Skill](https://img.shields.io/badge/Claude-Skill-8A2BE2.svg)](#installation)
 [![Status](https://img.shields.io/badge/status-early%20release-orange.svg)](#testing-status-and-known-limitations)
-
-**Author: Sujan Chapagain**
 
 [Overview](#overview) •
 [Features](#features) •
@@ -26,33 +24,7 @@
 
 ---
 
-## Table of contents
 
-1. [Overview](#overview)
-2. [Features](#features)
-3. [How it works](#how-it-works)
-4. [Requirements](#requirements)
-5. [Installation](#installation)
-6. [Quick start](#quick-start)
-7. [Usage examples](#usage-examples)
-8. [Script reference](#script-reference)
-9. [The comment ledger](#the-comment-ledger)
-10. [Severity and certainty definitions](#severity-and-certainty-definitions)
-11. [Supported formats](#supported-formats)
-12. [Repository structure](#repository-structure)
-13. [Examples included](#examples-included)
-14. [Adapting the skill](#adapting-the-skill)
-15. [Testing](#testing)
-16. [Testing status and known limitations](#testing-status-and-known-limitations)
-17. [Responsible and confidential use](#responsible-and-confidential-use)
-18. [Roadmap](#roadmap)
-19. [Contributing](#contributing)
-20. [Changelog](#changelog)
-21. [License](#license)
-22. [Citation](#citation)
-23. [Credits and acknowledgements](#credits-and-acknowledgements)
-
----
 
 ## Overview
 
@@ -89,18 +61,18 @@ opposite principles:
 ## Features
 
 ### Review capabilities
-- ✅ Nine-stage review workflow (intake → completeness → first pass → technical review →
+-  Nine-stage review workflow (intake → completeness → first pass → technical review →
   cross-check → comment drafting → annotation → QC → deliverables)
-- ✅ Claim–evidence map built before any criticism is written
-- ✅ Dimensions covered: contribution and novelty, design and methods, statistics and computation,
+-  Claim–evidence map built before any criticism is written
+-  Dimensions covered: contribution and novelty, design and methods, statistics and computation,
   results/tables/figures, discussion and interpretation, references and integrity, structure
   and reporting
-- ✅ Design-first statistical review: pseudoreplication, repeated measures, blocking, split-plot,
+-  Design-first statistical review: pseudoreplication, repeated measures, blocking, split-plot,
   multi-environment trials, counts/proportions/ordinal scores, multiple comparisons, effect sizes,
   data leakage and spatial validation in machine learning
-- ✅ Internal-consistency pass: abstract ↔ results ↔ conclusions, methods ↔ results, text ↔ tables,
+-  Internal-consistency pass: abstract ↔ results ↔ conclusions, methods ↔ results, text ↔ tables,
   units, degrees of freedom versus design
-- ✅ Fatal-versus-fixable reasoning and a transparent recommendation logic
+-  Fatal-versus-fixable reasoning and a transparent recommendation logic
   (Accept / Minor / Major / Reject)
 
 ### Specialist modules (activated only when relevant)
@@ -110,22 +82,22 @@ transcriptomics and bioinformatics · Soil science and sustainable agriculture �
 modelling and reproducible computing · A method for deriving a module for an unfamiliar field
 
 ### Manuscript annotation
-- ✅ **Native Word comments** for `.docx`, anchored to the exact quoted words
-- ✅ **Highlight annotations with pop-up notes** for text-layer `.pdf` (colour = severity)
-- ✅ Original file **never modified**; a byte-identical pristine copy is saved
-- ✅ **Anchoring report** stating how each comment was placed
+-  **Native Word comments** for `.docx`, anchored to the exact quoted words
+-  **Highlight annotations with pop-up notes** for text-layer `.pdf` (colour = severity)
+-  Original file **never modified**; a byte-identical pristine copy is saved
+-  **Anchoring report** stating how each comment was placed
   (`exact`, `partial`, `paragraph`, `section`, `page-note`, `unanchored`)
-- ✅ Independent **verification script** (author text unchanged, anchors match quotes, no
+-  Independent **verification script** (author text unchanged, anchors match quotes, no
   editor-only comment leaked into the manuscript, optional render test)
-- ✅ Page numbers only where reliable; line numbers are **never guessed**
+-  Page numbers only where reliable; line numbers are **never guessed**
 
 ### Integrity safeguards
-- ✅ Ledger validator **rejects quotes that are not in the manuscript**
-- ✅ Warns when suggested wording contains **numbers not present** in the manuscript
-- ✅ Detects near-duplicate comments and severity/certainty mismatches
-- ✅ Flags hidden text and **instructions embedded in the manuscript** aimed at AI reviewers
+-  Ledger validator **rejects quotes that are not in the manuscript**
+-  Warns when suggested wording contains **numbers not present** in the manuscript
+-  Detects near-duplicate comments and severity/certainty mismatches
+-  Flags hidden text and **instructions embedded in the manuscript** aimed at AI reviewers
   (treated as untrusted data, never followed)
-- ✅ Author-facing and **editor-only (confidential)** comments are kept separate
+-  Author-facing and **editor-only (confidential)** comments are kept separate
 
 ### Statistics checker
 `stat_checks.py` verifies numerical complaints before they are written: recompute a P-value from a
