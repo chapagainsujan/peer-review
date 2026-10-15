@@ -1,0 +1,71 @@
+{
+  "original_sha256": "194e6ee9c5fe6991a08e366407633eb10a241c2261ffd5af5a3ff75488c7412f",
+  "author": "AI Reviewer (Claude)",
+  "comments": [
+    {
+      "id": "C-001",
+      "anchoring": "exact",
+      "page": 1
+    },
+    {
+      "id": "C-002",
+      "anchoring": "partial",
+      "page": 2
+    },
+    {
+      "id": "C-003",
+      "anchoring": "exact",
+      "page": 2
+    },
+    {
+      "id": "C-004",
+      "anchoring": "exact",
+      "page": 1
+    },
+    {
+      "id": "C-005",
+      "anchoring": "exact",
+      "page": 2
+    },
+    {
+      "id": "C-006",
+      "anchoring": "exact",
+      "page": 2
+    },
+    {
+      "id": "C-007",
+      "anchoring": "exact",
+      "page": 2
+    },
+    {
+      "id": "C-008",
+      "anchoring": "exact",
+      "page": 2
+    },
+    {
+      "id": "C-009",
+      "anchoring": "exact",
+      "page": 2
+    },
+    {
+      "id": "C-010",
+      "anchoring": "exact",
+      "page": 2
+    },
+    {
+      "id": "C-011",
+      "anchoring": "exact",
+      "page": 2
+    },
+    {
+      "id": "C-012",
+      "anchoring": "exact",
+      "page": 2
+    },
+    {
+      "id": "C-013",
+      "anchoring": "exact",
+      "page": 2
+    }
+  ]
+}
