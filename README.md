@@ -1,8 +1,7 @@
 <div align="center">
 
-# 🔬 scientific-peer-review
+# scientific manuscript peer review
 
-# Claude Skill for rigorous scientific manuscript peer review
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](#changelog)
