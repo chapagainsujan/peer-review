@@ -498,7 +498,7 @@ If you use this skill in your work, please cite:
   title   = {scientific-peer-review: an evidence-grounded Claude Skill for scientific manuscript peer review},
   year    = {2026},
   version = {0.1.0},
-  url     = {https://github.com/YOUR-USER/scientific-peer-review}
+  url     = {https://github.com/chapagainsujan/peer-review}
 }
 ```
 
