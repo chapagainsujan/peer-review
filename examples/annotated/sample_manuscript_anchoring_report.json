@@ -1,0 +1,72 @@
+{
+  "original_sha256": "6ffe0e70a5d778389a5a8a946a38c4021a13ac18096a8ad1f08b5c9dfb95f4f7",
+  "author": "AI Reviewer (Claude)",
+  "editor_comments_not_inserted": 1,
+  "comments": [
+    {
+      "id": "C-001",
+      "anchoring": "exact",
+      "anchored_text": "Each biochar rate was applied to one greenhouse bench, and six pots per rate were placed o"
+    },
+    {
+      "id": "C-002",
+      "anchoring": "exact",
+      "anchored_text": "treating each pot-by-date observation as a replicate"
+    },
+    {
+      "id": "C-003",
+      "anchoring": "exact",
+      "anchored_text": "F(3,20) = 2.91, P = 0.012"
+    },
+    {
+      "id": "C-004",
+      "anchoring": "exact",
+      "anchored_text": "increased grain yield by 23% relative to the control"
+    },
+    {
+      "id": "C-005",
+      "anchoring": "exact",
+      "anchored_text": "are explained by improved soil water-holding capacity under biochar"
+    },
+    {
+      "id": "C-006",
+      "anchoring": "exact",
+      "anchored_text": "biochar should be applied at 10 t ha-1 by farmers to control crown rot and increase yield"
+    },
+    {
+      "id": "C-007",
+      "anchoring": "exact",
+      "anchored_text": "Plants were inoculated with Fusarium culmorum at tillering."
+    },
+    {
+      "id": "C-008",
+      "anchoring": "exact",
+      "anchored_text": "Fisher's LSD test at P < 0.05 for all pairwise comparisons"
+    },
+    {
+      "id": "C-009",
+      "anchoring": "exact",
+      "anchored_text": "4.82 \u00b1 0.31"
+    },
+    {
+      "id": "C-010",
+      "anchoring": "exact",
+      "anchored_text": "decreased with increasing biochar rate"
+    },
+    {
+      "id": "C-011",
+      "anchoring": "exact",
+      "anchored_text": "Analyses were done in R."
+    },
+    {
+      "id": "C-012",
+      "anchoring": "exact",
+      "anchored_text": "converted to t ha-1"
+    },
+    {
+      "id": "C-013",
+      "anchoring": "exact",
+      "anchored_text": "an increase of 18.5%"
+    }
+  ]
+}
