@@ -11,6 +11,7 @@ What it does
     quote boundaries so only the quoted words are highlighted; author text is not edited.
   * Writes <stem>_anchoring_report.json stating HOW each comment was anchored:
         exact      - quote found inside one paragraph; only those words are anchored
+        run-expanded - quote found, but a run that could not be split safely widened the anchor
         partial    - only the beginning of the quote was found (quote spans paragraphs)
         paragraph  - block known but quote not found inside it; whole paragraph anchored
         section    - no passage; anchored to the section heading
@@ -69,9 +70,12 @@ def run_text(r: Run) -> str:
     return r.text or ""
 
 
+_OK_KIDS = {qn("w:t"), qn("w:lastRenderedPageBreak")}   # layout hint only; safe to drop
+
+
 def splittable(r: Run) -> bool:
     kids = [c.tag for c in r._r if c.tag != qn("w:rPr")]
-    return bool(kids) and all(t == qn("w:t") for t in kids)
+    return bool(kids) and all(t in _OK_KIDS for t in kids) and any(t == qn("w:t") for t in kids)
 
 
 def split_at(run: Run, k: int) -> None:
@@ -85,7 +89,7 @@ def split_at(run: Run, k: int) -> None:
     Run(new, run._parent).text = t[k:]
 
 
-def find_span(p: Paragraph, pattern: re.Pattern) -> tuple[Run, Run] | None:
+def find_span(p: Paragraph, pattern: re.Pattern) -> tuple[Run, Run, bool] | None:
     runs = para_runs(p)
     full = n1("".join(run_text(r) for r in runs))
     m = pattern.search(full)
@@ -117,7 +121,13 @@ def find_span(p: Paragraph, pattern: re.Pattern) -> tuple[Run, Run] | None:
             last = r
     if first is None:
         return None
-    return first, last
+    # was the anchored range exactly the matched words? (unsplittable runs widen it)
+    seq = para_runs(p)
+    i0 = next(i for i, r in enumerate(seq) if r._r is first._r)
+    i1 = next(i for i, r in enumerate(seq) if r._r is last._r)
+    covered = n1("".join(run_text(r) for r in seq[i0:i1 + 1]))
+    exact = re.sub(r"\s+", "", covered).lower() == re.sub(r"\s+", "", n1(m.group(0))).lower()
+    return first, last, exact
 
 
 def collect_blocks(doc) -> tuple[dict[str, list[Paragraph]], list[Paragraph]]:
@@ -204,7 +214,9 @@ def main() -> int:
             for p in search_order:
                 span = find_span(p, pat)
                 if span:
-                    precision, anchor_p = "exact", p
+                    precision = "exact" if span[2] else "run-expanded"
+                    anchor_p = p
+                    span = span[:2]
                     break
             if not span and len(q) > 40:                     # quote may straddle paragraphs
                 pat2 = quote_regex(q[:60].rsplit(" ", 1)[0])
@@ -212,6 +224,7 @@ def main() -> int:
                     span = find_span(p, pat2)
                     if span:
                         precision, anchor_p = "partial", p
+                        span = span[:2]
                         break
         if not span and cand:
             runs = [r for p in cand for r in para_runs(p) if run_text(r).strip()]

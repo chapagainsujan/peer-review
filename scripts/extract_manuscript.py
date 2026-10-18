@@ -103,9 +103,15 @@ def extract_docx(path: Path) -> dict:
                 tracked_blocks.append(bid)
             if info["nonrun"]:
                 nonrun_blocks.append(bid)
-            blocks.append({"id": bid, "type": "paragraph", "style": style,
-                           "section": section, "is_heading": bool(is_heading),
-                           "text": text, "hidden": info["hidden"]})
+            MNS = "{http://schemas.openxmlformats.org/officeDocument/2006/math}"
+            eqs = ["".join(t.text or "" for t in om.iter(MNS + "t"))
+                   for om in child.iter(MNS + "oMath")]
+            blk = {"id": bid, "type": "paragraph", "style": style,
+                   "section": section, "is_heading": bool(is_heading),
+                   "text": text, "hidden": info["hidden"]}
+            if eqs:
+                blk["equations"] = eqs      # equation text is NOT part of 'text'
+            blocks.append(blk)
             p_i += 1
         elif child.tag == qn("w:tbl"):
             tbl = Table(child, doc)

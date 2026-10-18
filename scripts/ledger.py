@@ -21,7 +21,9 @@ Ledger shape:
       "severity": "Critical|Major|Minor|Optional",
       "status":   "confirmed|probable|question|suggestion",
       "category": "design|statistics|data|interpretation|literature|reproducibility|
-                   integrity|reporting|writing|figures-tables|consistency",
+                   integrity|reporting|writing|figures-tables|consistency|novelty|ethics|
+                   language|typo|terminology|formatting|unscientific-language|reference|
+                   citation|completeness",
       "audience": "author" (default) | "editor",
       "location": {"section": "...", "block": "P12" | "T1.r2c3" | "pg3",
                    "page": 3, "line": "12-14", "table": "Table 2", "figure": "Fig. 1",
@@ -50,7 +52,11 @@ SEVERITIES = ["Critical", "Major", "Minor", "Optional"]
 STATUSES = ["confirmed", "probable", "question", "suggestion"]
 CATEGORIES = {"design", "statistics", "data", "interpretation", "literature",
               "reproducibility", "integrity", "reporting", "writing",
-              "figures-tables", "consistency", "novelty", "ethics"}
+              "figures-tables", "consistency", "novelty", "ethics",
+              # line-level and completeness categories
+              "language", "typo", "terminology", "formatting", "unscientific-language",
+              "reference", "citation", "completeness", "abbreviation", "reporting"}
+EDIT_CATEGORIES = {"language", "typo", "terminology", "unscientific-language", "abbreviation"}
 ID_RE = re.compile(r"^C-\d{3,}$")
 
 
@@ -115,6 +121,10 @@ def validate(ledger: dict, map_path: str | None = None) -> tuple[list[str], list
                                    "check that severity matches the evidence.")
             if sev == "Critical" and st != "confirmed":
                 warns.append(pre + "Critical but not 'confirmed': justify or downgrade.")
+        if c.get("category") in EDIT_CATEGORIES and not editor and st != "question" and \
+                not str(c.get("suggested_correction", "")).strip():
+            warns.append(pre + "line-level comment without suggested_correction: give the corrected "
+                               "wording of the same span (or make it a 'question' if meaning is unclear)")
         # quote must exist -----------------------------------------------------
         q = str(c.get("quote", "")).strip()
         if not q and not editor and not (loc.get("absent") or loc.get("table")
