@@ -1,0 +1,30 @@
+{
+  "title": "Biochar amendment effects on grain yield and Fusarium crown rot severity in winter wheat: a greenhouse study (SYNTHETIC EXAMPLE)",
+  "manuscript_file": "sample_manuscript.docx",
+  "journal": "not supplied",
+  "date": "example",
+  "depth": "Standard (synthetic example)",
+  "reviewer_note": "SYNTHETIC EXAMPLE generated with the scientific-peer-review skill. All data are invented.",
+  "summary": "Four biochar rates were applied to wheat in pots inoculated with Fusarium culmorum; yield and crown rot severity were measured and a farm recommendation is made.",
+  "overall_assessment": "The design confounds biochar rate with greenhouse bench (C-001); the analysis treats repeated measures as independent (C-002); a P-value is misreported (C-003); the Abstract and Discussion overreach (C-004 to C-006).",
+  "strengths": [
+    "Growth conditions and soil are adequately described.",
+    "Degrees of freedom for yield are consistent with the design."
+  ],
+  "weaknesses": [
+    "Treatment confounded with bench.",
+    "Repeated measures analysed as independent.",
+    "Overstated recommendation."
+  ],
+  "recommendation": {
+    "decision": "Reject (encourage resubmission after a replicated experiment)",
+    "drivers": [
+      "C-001"
+    ],
+    "would_change": "Evidence that benches were replicated and randomised.",
+    "confidence": "4/5"
+  },
+  "limitations": [
+    "No supplement, raw data or code; Figure 1 image not included in the example."
+  ]
+}
