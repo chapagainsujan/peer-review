@@ -1,6 +1,6 @@
 # Quality-assurance report
 
-Date of testing: 15 October 2026. Environment: Linux container, Python 3, python-docx 1.2,
+Date of testing: 15-17 October 2026 (v0.1.0 on 15 Oct; v0.2.0 additions on 17 Oct). Environment: Linux container, Python 3, python-docx 1.2,
 PyMuPDF (pip), scipy 1.17, LibreOffice (headless), poppler. Microsoft Word was **not** available.
 
 ## 1. Summary
@@ -9,7 +9,7 @@ PyMuPDF (pip), scipy 1.17, LibreOffice (headless), poppler. Microsoft Word was *
 |---|---|
 | Source audit (4 archives) | Done, with stated limits on depth (see SOURCE_INVENTORY_AND_SYNTHESIS.md s.2) |
 | Skill structure and frontmatter | Passed `quick_validate.py`; name 22 chars, description 708 chars, compatibility 249 chars; SKILL.md 128 lines |
-| Script unit and end-to-end tests | 15 of 15 pass |
+| Script unit and end-to-end tests | 25 of 25 pass (v0.2.0) |
 | Functional review test on a synthetic manuscript | Completed; **not independent** (see s.4) |
 | Test on real manuscripts | **Not done** |
 | Blind comparison with human reviewers / baseline Claude | **Not done** |
@@ -115,3 +115,62 @@ LibreOffice render; margin comments inspected visually. PDF (rendered from the s
 3. Open annotated DOCX files in Microsoft Word and Google Docs; test two-column PDFs and tracked-change files.
 4. Run the description-optimisation loop in Claude Code.
 5. Have a plant scientist, a statistician and a bioinformatician review the specialist modules.
+
+
+---
+
+## 7. v0.2.0 addendum: exhaustive line-by-line mode
+
+**Why:** v0.1.0 deliberately avoided line-level language, typo and reference-format comments ("fix patterns, not
+every instance") and treated the citation/style prompts in the supplied repositories as cosmetic. That was a
+design error for a full review. v0.2.0 adds an exhaustive mode (default for full reviews) and the tools to support it.
+
+**Added:** `references/line-by-line-audit.md`, `reference-audit.md`, `figure-table-audit.md`,
+`completeness-checklist.md`; scripts `lint_text.py`, `audit_references.py`, `image_audit.py`,
+`line_locator.py`, `build_report_docx.py`; ledger categories for language, typo, terminology,
+unscientific wording, references, citations, abbreviations, completeness; Word report with tables for
+line corrections, reference audit, figure audit and missing content.
+
+**Automated tests:** 10 new tests (linter planted problems, negative control with clean text, number
+text-vs-table near-miss, equation tolerance, reference completeness and cross-checks, effective dpi,
+Word report content and editor/author separation, run-splitting regression, page/line locator).
+
+**Bugs found and fixed in v0.2.0 development**
+1. Glued-heading rule fired on genuine headings such as "2.5.1 Estimation..." (regex fixed).
+2. Narrative-citation check treated "Himalayan Superfood [20]" as an author name (now requires an author-like form
+   or a surname that exists in the list).
+3. Table-row numbers matched as "near" table values (now requires a decimal table value; coordinates skipped).
+4. Chapter entries starting "In ..." were not classified; publisher check was too lenient (fixed).
+5. Duplicate findings per entry (de-duplicated).
+6. Annotator could not split runs beginning with `w:lastRenderedPageBreak` and mislabelled the resulting
+   over-wide anchors "exact"; now splits them, and labels any residual case `run-expanded` (found by the
+   independent verifier).
+7. Reference classification missed "Journal. 2020:55-60" entries without DOI (volume missing), then over-reached
+   to organisational reports; refined with a journal-like-container test.
+8. Word report table widths were ignored (55-page report); fixed with fixed layout and grid widths (29 pages).
+9. Ledger validator demanded corrections for global formatting entries and rejected free-form editor notes (relaxed).
+
+**Functional test on a real sample manuscript supplied by the user for skill testing**
+(not included in this package; unpublished; 37,405 characters, 5 tables, 2 figures, 47 references).
+Workflow run end to end: extraction; linter (152 candidates, all dispositioned); reference audit (27 offline
+findings; 2 entries verified online); image audit and viewing of both figures; recomputation of all ten rows of
+the genetic-parameter table from the ANOVA table; 143-comment ledger (33 Major, 107 Minor, 3 Optional, 2 of which
+editor-only), all quotes validated against the manuscript; page/line numbers; native Word comments
+(140 exact, 1 paragraph-level, 2 editor-only not inserted); independent verification passed (author text identical,
+original unchanged, LibreOffice renders); 29-page Word report and a separate editor note, inspected visually.
+Findings the tools made verifiable included: an ANOVA F ratio whose P-value contradicts the table asterisks,
+a genetic-parameter row that cannot be reproduced from the ANOVA, a 100-fold scaling error in two variance
+entries, text-versus-table number discrepancies, a length reported in grams, a count reported in cm,
+contradictory funding statements, and incomplete references (two confirmed against journal records).
+
+**Limits of that test (important)**
+- One manuscript, one reviewer (the skill's author, using the skill's own method): not independent validation,
+  no measured false-positive rate, no comparison with human referee reports.
+- Several comments rest on the reviewer's domain knowledge (e.g. the agro-ecology of Nepal's mid-hills,
+  fodder value of finger millet straw) and are marked probable/question; they were not verified against sources.
+- Only 2 of 47 references were checked online; the rest are marked "not verified".
+- Supplementary files were not available.
+- Page/line numbers come from a LibreOffice rendering and may differ in Word.
+- The tool cannot judge legibility or correctness of figure content; that relied on viewing previews at reduced
+  resolution (marked probable where small text mattered).
+- The review was not checked by a human subject-matter expert.
