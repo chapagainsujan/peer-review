@@ -20,7 +20,7 @@ the problem, see why it matters, and know what would resolve it, without guessin
 | `id` | all | `C-001`, unique, stable across report/annotation |
 | `severity` | all | Critical / Major / Minor / Optional |
 | `status` | all | confirmed / probable / question / suggestion |
-| `category` | all | design, statistics, data, interpretation, literature, reproducibility, integrity, reporting, writing, figures-tables, consistency, novelty, ethics |
+| `category` | all | science: design, statistics, data, interpretation, literature, novelty, reproducibility, integrity, ethics, consistency, completeness; line-level: language, typo, terminology, formatting, unscientific-language; sources: reference, citation, figures-tables |
 | `audience` | optional | `author` (default) or `editor` (confidential, never annotated into the manuscript) |
 | `location` | all | section; block ID; page/line only if reliable; table/figure; `absent: true` for missing information |
 | `quote` | all except absence/table/figure | Verbatim, short. The ledger validator rejects quotes not found in the manuscript |
@@ -142,11 +142,34 @@ state..." not "the authors failed to..."). No sarcasm, no speculation about moti
 inflation ("fatal", "unacceptable") unless the Critical criteria are met. Each comment should
 be understandable without the rest of the report.
 
-## 8. What not to comment on
+## 8. Line-level comments (exhaustive mode)
 
-- Style preferences with no effect on clarity or accuracy.
+One entry per confirmed error. `quote` = the exact wording (a clause or sentence), `suggested_correction`
+= the corrected wording of that span, `comment` = what is wrong and why in one or two sentences.
+
+| Type | Quote | Correction | Comment |
+|---|---|---|---|
+| Grammar | "it does not explains cause and effect" | "it does not explain cause and effect" | Subject-verb/verb form. |
+| Plural | "Data was collected" | "Data were collected" | 'Data' is plural. |
+| Unit | "EHL ranged from 5.76 to 19.94 g" | "EHL ranged from 5.76 to 19.94 cm" [after the authors confirm] | EHL is defined as ear head length (cm) in the abbreviation list; 'g' contradicts it. Status: confirmed conflict; the correct unit is for the authors to confirm. |
+| Number mismatch | "5.7 to 12.93 g" | - (ask) | Table 4 gives 5.70-12.94; reconcile text and table. |
+| Unscientific wording | "an immense avenue for yield improvement" | "a substantial opportunity for yield improvement [support with a citation or data]" | Promotional/non-quantitative. |
+| Unsupported | "Himalayan Superfood" | "a nutritionally rich crop [cite nutrient values]" | Marketing term without definition or data. |
+| Cross-reference | "(Table 1)" for GCV values | "(Table 4)" | Table 1 lists landraces; GCV is in Table 4. Verify against the numbering. |
+| Abbreviation | "FLA" | define at first use | Used but never defined. |
+| Typography | "10 m2 (5 m2 m)" | "10 m² (5 m × 2 m)" | Dimension garbled. |
+| Heading | "[21].2.4 Data collection" | start the heading on a new line | Heading glued to the previous sentence. |
+
+Rules: never change numbers, names or claims in a correction (mark conflicts as questions); keep
+meaning; no comment without exact words; do not 'correct' valid variants unless inconsistent within
+the paper or against the journal style.
+
+## 9. What not to comment on
+
+- Style preferences that are valid and consistent (and not against stated journal rules).
 - Alternative analyses you would merely have chosen, when the one used is valid for the design.
 - Requests for experiments outside the paper's stated scope.
 - Issues the manuscript already addresses elsewhere (check the supplement first).
-- Duplicates: one comment per root cause; cross-reference instead of repeating.
+- Duplicates: one comment per root cause (but in exhaustive mode separate *instances* needing
+  separate corrections each get an entry).
 - Anything you could not verify and cannot phrase as a question.

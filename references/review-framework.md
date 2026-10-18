@@ -130,8 +130,11 @@ and validation for predictive models; reproducible code and workflow.
   paper does not support.
 - Terminology precise and consistent (e.g. "resistance" vs "tolerance"; "yield" definition;
   "heritability" broad vs narrow sense).
-- Writing issues matter when they block understanding or accuracy. Fix patterns, not every
-  instance: one comment per recurring issue with 2-3 examples. Do not rewrite the paper.
+- Writing issues always matter: they affect clarity, accuracy and how editors judge the paper.
+  In **exhaustive mode** (default for full reviews) every confirmed typo, grammar error, unscientific
+  or unsupported wording, undefined abbreviation and inconsistent number is reported individually with the
+  original text and a correction (`line-by-line-audit.md`). In **standard mode** recurring style issues are
+  grouped (one comment with 2-3 examples). Do not rewrite the paper: correct the exact span.
 - Reporting guideline fit (section 5), when applicable.
 
 ## 4. Cross-checking for internal consistency
@@ -177,6 +180,13 @@ according to...". Do not demand a checklist the journal does not use.
 
 Field and greenhouse agronomy rarely has a mandatory checklist; the checks in
 `specialist-modules.md` play that role.
+
+## 5b. Line-level, reference, figure and completeness audits
+
+A scientific review is incomplete without these four audits, run for every full review:
+`line-by-line-audit.md` (every paragraph, table cell, caption), `reference-audit.md` (every entry,
+every citation), `figure-table-audit.md` (every image viewed, every table checked) and
+`completeness-checklist.md` (what is missing). Their findings feed the same ledger and the same Word report.
 
 ## 6. Journal-specific requirements
 

@@ -31,6 +31,14 @@ For every comment in the ledger answer all of these. Fix or delete on any "no".
 10. **Right audience?** Integrity and confidential concerns are `editor`; nothing accusatory is
     in an author-facing comment.
 
+## 1b. Coverage QC for exhaustive mode
+
+Before delivering, confirm and state: every paragraph, table, caption and reference entry was read
+(counts); every linter candidate was confirmed, rejected or merged; every figure was viewed (or listed as
+not viewed); every reference-list entry was audited and the ones checked online are named; the completeness
+checklist was applied; each line-level comment has a correction that does not change the science. If any
+part was not done, say it in "What this review could not assess".
+
 ## 2. Negative controls: do not manufacture criticism
 
 Before finalising, list 3-5 passages that you judge **scientifically acceptable** (a

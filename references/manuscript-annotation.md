@@ -23,7 +23,7 @@ not possible, deliver the ledger and say so.
 | `<stem>_original.<ext>` | Byte-identical pristine copy |
 | `<stem>_annotated.<ext>` | Same document with review comments |
 | `<stem>_ledger.json` / `.md` / `.csv` | Every comment with ID, severity, location, quote, rationale, revision (the single source of truth) |
-| `<stem>_anchoring_report.json` | How each comment was anchored (exact / partial / paragraph / section / unanchored) |
+| `<stem>_anchoring_report.json` | How each comment was anchored (exact / run-expanded / partial / paragraph / section / unanchored) |
 | `<stem>_review_report.md` (or .docx on request) | The structured peer-review report (`report-template.md`) |
 
 Generate the report's comment list **from the ledger** so the annotated file, ledger and report
@@ -57,7 +57,13 @@ the ledger/report in chat or as text, and explain how to apply comments manually
    (or `annotate_pdf.py`).
 6. `python scripts/verify_annotations.py --original paper.docx --annotated out/paper_annotated.docx --ledger ledger.json --report out/paper_anchoring_report.json --render`
    Must end with `ALL CHECKS PASSED`. If not, fix and rerun; do not deliver a failing file.
+6b. **Page and line numbers** (before annotating, so they appear in the comments and report):
+   `python scripts/line_locator.py paper.docx ledger.json --out ledger.located.json` - uses a LibreOffice
+   rendering where the document's own line numbering is drawn; the numbers are exact for that rendering and may
+   differ slightly in Word (the script records `line_source`; say so in the report). Tables have no line numbers.
 7. `python scripts/ledger.py render ledger.json --md out/paper_ledger.md --csv out/paper_ledger.csv --audience author`
+7b. **Word report**: `python scripts/build_report_docx.py --ledger ledger.json --report report.json --refs work/refs_audit.json --images work/images_audit.json --out out/paper_review_report.docx`
+   (and `--audience editor` for the confidential note). Render it to PDF and look at a page or two.
 8. Visually spot-check: convert the annotated DOCX to PDF (LibreOffice) and look at a page or
    two if tools allow. Say what you checked.
 
@@ -72,17 +78,20 @@ annotating, so you annotate once.
   for authors and for the anchoring script.
 - **Section/heading** is always available.
 - **Page numbers**: reliable for PDFs (physical page index; may differ from printed page
-  numbers if the PDF has a title page offset). **Not reliable for DOCX**: pagination depends on
-  fonts, printer and Word version. Give DOCX page numbers only if you rendered it and say "in
-  the rendered copy".
-- **Line numbers**: use only line numbers you can see in the document (journal line numbering
-  printed in the margin) or true line numbers of a text file. Never compute or guess them. If the
+  numbers if the PDF has a title page offset). **Not reliable for DOCX** by themselves: pagination depends on
+  fonts and Word version. `line_locator.py` obtains them from a rendered copy; label them "in the rendered copy".
+- **Line numbers**: use only line numbers read from a rendered copy (`line_locator.py`), printed in the
+  supplied PDF, or true line numbers of a text file. Never compute or guess them. If the
   manuscript has line numbers but you cannot read them from the file, quote the passage and name
   the section instead, and say line numbers were not available.
 - If pagination changes (you converted or re-saved), distinguish "original page" from "page
   in the annotated copy" in the report.
 
 ## 5. Anchoring precision and what to tell the user
+
+`exact` = only the quoted words are anchored. `run-expanded` = the quote was found but a run holding
+tabs, breaks, fields or images could not be split safely, so the anchor is a little wider (the
+verifier accepts this only when it is reported). Always report the counts per precision.
 
 Report the anchoring summary from the report file, e.g. "18 of 21 comments are attached to the
 exact quoted words, 2 to a whole paragraph, 1 is not in the document (ledger only)". Do not
