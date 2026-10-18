@@ -27,33 +27,6 @@
 
 ---
 
-## Table of contents
-
-1. [Overview](#overview)
-2. [Features](#features)
-3. [How it works](#how-it-works)
-4. [Requirements](#requirements)
-5. [Installation](#installation)
-6. [Quick start](#quick-start)
-7. [Usage examples](#usage-examples)
-8. [Script reference](#script-reference)
-9. [The comment ledger](#the-comment-ledger)
-10. [Severity and certainty definitions](#severity-and-certainty-definitions)
-11. [Supported formats](#supported-formats)
-12. [Repository structure](#repository-structure)
-13. [Examples included](#examples-included)
-14. [Adapting the skill](#adapting-the-skill)
-15. [Testing](#testing)
-16. [Testing status and known limitations](#testing-status-and-known-limitations)
-17. [Responsible and confidential use](#responsible-and-confidential-use)
-18. [Roadmap](#roadmap)
-19. [Contributing](#contributing)
-20. [Changelog](#changelog)
-21. [License](#license)
-22. [Citation](#citation)
-23. [Credits and acknowledgements](#credits-and-acknowledgements)
-
----
 
 ## Overview
 
