@@ -95,47 +95,47 @@ opposite principles:
 ## Features
 
 ### Exhaustive line-by-line audit (new in v0.2.0)
-- ✅ **Every paragraph, sentence, table cell and caption** is read; every confirmed error is its own comment
+-  **Every paragraph, sentence, table cell and caption** is read; every confirmed error is its own comment
   with *original text → correction → reason*
-- ✅ Typos, grammar, punctuation, spacing, hyphenation, US/UK mixing, garbled symbols, glued headings
-- ✅ **Unscientific and promotional wording** (e.g. "immense", "superfood", "obviously", "proves"), vague
+-  Typos, grammar, punctuation, spacing, hyphenation, US/UK mixing, garbled symbols, glued headings
+-  **Unscientific and promotional wording** (e.g. "immense", "superfood", "obviously", "proves"), vague
   quantities, absolute statements, causal claims on correlational data, template phrases and connector overuse
-- ✅ **Numbers and units**: text vs table mismatches (e.g. 12.93 vs 12.94), wrong units (a length in grams),
+-  **Numbers and units**: text vs table mismatches (e.g. 12.93 vs 12.94), wrong units (a length in grams),
   decimal-place inconsistency, P-value notation, undefined or conflicting abbreviations
-- ✅ **Cross-references**: wrong table numbers, uncited tables/figures, supplement numbering conflicts
-- ✅ Candidate findings come from `lint_text.py`; **every candidate is read and confirmed or rejected**
+-  **Cross-references**: wrong table numbers, uncited tables/figures, supplement numbering conflicts
+-  Candidate findings come from `lint_text.py`; **every candidate is read and confirmed or rejected**
 
 ### Reference and citation audit (new in v0.2.0)
-- ✅ Each entry checked for authors, year, title, journal, **volume, issue, pages/article number, DOI**; book
+-  Each entry checked for authors, year, title, journal, **volume, issue, pages/article number, DOI**; book
   chapters for editors/publisher/pages; reports for publisher/URL
-- ✅ In-text ↔ list cross-check, including "Author et al. [n]" versus entry *n*, uncited entries, out-of-order citation
-- ✅ Odd punctuation, inconsistent DOI/journal-abbreviation style, duplicates, self-citation share, reference age
-- ✅ Procedure for **verifying entries online** (publisher/PubMed/Crossref) with the source recorded; anything not
+-  In-text ↔ list cross-check, including "Author et al. [n]" versus entry *n*, uncited entries, out-of-order citation
+-  Odd punctuation, inconsistent DOI/journal-abbreviation style, duplicates, self-citation share, reference age
+-  Procedure for **verifying entries online** (publisher/PubMed/Crossref) with the source recorded; anything not
   verified is labelled "NOT verified online". Nothing is "corrected" from memory
 
 ### Figures, images and tables (new in v0.2.0)
-- ✅ Effective resolution (dpi at printed size), format, colour mode, caption and alt text for every image
-- ✅ Previews are saved so each figure is **actually viewed** (axes, units, dual axes, colour-vision safety, caption vs
+-  Effective resolution (dpi at printed size), format, colour mode, caption and alt text for every image
+-  Previews are saved so each figure is **actually viewed** (axes, units, dual axes, colour-vision safety, caption vs
   axis mismatch, text-vs-figure description)
-- ✅ Table logic checks (e.g. recompute h², GCV, GA from the ANOVA table)
+-  Table logic checks (e.g. recompute h², GCV, GA from the ANOVA table)
 
 ### Completeness check (new in v0.2.0)
-- ✅ Lists what is **missing** and should be added: management details, sampling, formulas, software, model and
+-  Lists what is **missing** and should be added: management details, sampling, formulas, software, model and
   assumptions, limitations, data availability, declarations consistency
 
 ### Review capabilities
-- ✅ Nine-stage review workflow (intake → completeness → first pass → technical review →
+-  Nine-stage review workflow (intake → completeness → first pass → technical review →
   cross-check → comment drafting → annotation → QC → deliverables)
-- ✅ Claim–evidence map built before any criticism is written
-- ✅ Dimensions covered: contribution and novelty, design and methods, statistics and computation,
+-  Claim–evidence map built before any criticism is written
+-  Dimensions covered: contribution and novelty, design and methods, statistics and computation,
   results/tables/figures, discussion and interpretation, references and integrity, structure
   and reporting
-- ✅ Design-first statistical review: pseudoreplication, repeated measures, blocking, split-plot,
+-  Design-first statistical review: pseudoreplication, repeated measures, blocking, split-plot,
   multi-environment trials, counts/proportions/ordinal scores, multiple comparisons, effect sizes,
   data leakage and spatial validation in machine learning
-- ✅ Internal-consistency pass: abstract ↔ results ↔ conclusions, methods ↔ results, text ↔ tables,
+-  Internal-consistency pass: abstract ↔ results ↔ conclusions, methods ↔ results, text ↔ tables,
   units, degrees of freedom versus design
-- ✅ Fatal-versus-fixable reasoning and a transparent recommendation logic
+-  Fatal-versus-fixable reasoning and a transparent recommendation logic
   (Accept / Minor / Major / Reject)
 
 ### Specialist modules (activated only when relevant)
@@ -145,29 +145,29 @@ transcriptomics and bioinformatics · Soil science and sustainable agriculture �
 modelling and reproducible computing · A method for deriving a module for an unfamiliar field
 
 ### Manuscript annotation
-- ✅ **Native Word comments** for `.docx`, anchored to the exact quoted words
-- ✅ **Highlight annotations with pop-up notes** for text-layer `.pdf` (colour = severity)
-- ✅ Original file **never modified**; a byte-identical pristine copy is saved
-- ✅ **Anchoring report** stating how each comment was placed
+-  **Native Word comments** for `.docx`, anchored to the exact quoted words
+-  **Highlight annotations with pop-up notes** for text-layer `.pdf` (colour = severity)
+-  Original file **never modified**; a byte-identical pristine copy is saved
+-  **Anchoring report** stating how each comment was placed
   (`exact`, `partial`, `paragraph`, `section`, `page-note`, `unanchored`)
-- ✅ Independent **verification script** (author text unchanged, anchors match quotes, no
+-  Independent **verification script** (author text unchanged, anchors match quotes, no
   editor-only comment leaked into the manuscript, optional render test)
-- ✅ Page numbers only where reliable; line numbers are **never guessed**
+-  Page numbers only where reliable; line numbers are **never guessed**
 
 ### Integrity safeguards
-- ✅ Ledger validator **rejects quotes that are not in the manuscript**
-- ✅ Warns when suggested wording contains **numbers not present** in the manuscript
-- ✅ Detects near-duplicate comments and severity/certainty mismatches
-- ✅ Flags hidden text and **instructions embedded in the manuscript** aimed at AI reviewers
+-  Ledger validator **rejects quotes that are not in the manuscript**
+-  Warns when suggested wording contains **numbers not present** in the manuscript
+-  Detects near-duplicate comments and severity/certainty mismatches
+-  Flags hidden text and **instructions embedded in the manuscript** aimed at AI reviewers
   (treated as untrusted data, never followed)
-- ✅ Author-facing and **editor-only (confidential)** comments are kept separate
+-  Author-facing and **editor-only (confidential)** comments are kept separate
 
 ### Word deliverables (new in v0.2.0)
-- ✅ `*_annotated.docx` with native comments (page/line from `line_locator.py`)
-- ✅ `*_review_report.docx`: summary, assessment, recommendation, major comments, minor comments,
+-  `*_annotated.docx` with native comments (page/line from `line_locator.py`)
+-  `*_review_report.docx`: summary, assessment, recommendation, major comments, minor comments,
   **line-by-line corrections table**, **reference audit table**, **figure/table audit**, **missing-content table**,
   statistical and reproducibility assessment, limitations, ledger appendix
-- ✅ Separate confidential `*_editor_note.docx`
+-  Separate confidential `*_editor_note.docx`
 
 ### Statistics checker
 `stat_checks.py` verifies numerical complaints before they are written: recompute a P-value from a
@@ -629,22 +629,6 @@ If you use this skill in your work, please cite:
 
 ### Author and maintainer
 **Sujan Chapagain**: concept, requirements, scientific direction, and project ownership.
-
-### Design sources
-The skill's design was informed by an audit of four open-source (MIT-licensed) projects. No code or
-prompt text was copied verbatim; ideas were adapted, rewritten, or deliberately rejected. The
-full decision record is in
-[`docs/SOURCE_INVENTORY_AND_SYNTHESIS.md`](docs/SOURCE_INVENTORY_AND_SYNTHESIS.md).
-
-| Project | Ideas adapted |
-|---|---|
-| `ai-peer-review-skill` | Multiple review lenses, meta-review synthesis, cite only retrieved identifiers |
-| `AI-paper-reviewer` | Cross-section consistency checks, claim-hedging heuristics, reproducibility-checklist idea |
-| `ai-paper-review` | Writing-clarity and internal-consistency reviewer, structured comment schema, consolidation by severity |
-| `open-scholar-peer` | Claim-oriented summaries, time-anchored literature retrieval, comparator scouting, "error is not empty", "what this review did not have" |
-
-The `open-scholar-peer` project is a community implementation of Google's **ScholarPeer** method.
-Please cite the original ScholarPeer paper if you build on that approach.
 
 ### Tools and libraries
 [python-docx](https://github.com/python-openxml/python-docx) ·
