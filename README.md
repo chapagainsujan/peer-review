@@ -1,14 +1,18 @@
 <div align="center">
 
-# scientific manuscript peer review
+# 🔬 scientific-peer-review
 
+### An exhaustive, evidence-grounded Claude Skill for scientific manuscript peer review
+#### Reviews the science **and** every line: typos, grammar, unscientific wording, numbers, figures and references
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-0.1.0-blue.svg)](#changelog)
-[![Tests](https://img.shields.io/badge/tests-15%20passing-brightgreen.svg)](#testing)
+[![Version](https://img.shields.io/badge/version-0.2.0-blue.svg)](#changelog)
+[![Tests](https://img.shields.io/badge/tests-25%20passing-brightgreen.svg)](#testing)
 [![Python](https://img.shields.io/badge/python-3.9%2B-3776AB.svg?logo=python&logoColor=white)](#requirements)
 [![Claude Skill](https://img.shields.io/badge/Claude-Skill-8A2BE2.svg)](#installation)
 [![Status](https://img.shields.io/badge/status-early%20release-orange.svg)](#testing-status-and-known-limitations)
+
+**Author: Sujan Chapagain**
 
 [Overview](#overview) •
 [Features](#features) •
@@ -23,11 +27,37 @@
 
 ---
 
+## Table of contents
 
+1. [Overview](#overview)
+2. [Features](#features)
+3. [How it works](#how-it-works)
+4. [Requirements](#requirements)
+5. [Installation](#installation)
+6. [Quick start](#quick-start)
+7. [Usage examples](#usage-examples)
+8. [Script reference](#script-reference)
+9. [The comment ledger](#the-comment-ledger)
+10. [Severity and certainty definitions](#severity-and-certainty-definitions)
+11. [Supported formats](#supported-formats)
+12. [Repository structure](#repository-structure)
+13. [Examples included](#examples-included)
+14. [Adapting the skill](#adapting-the-skill)
+15. [Testing](#testing)
+16. [Testing status and known limitations](#testing-status-and-known-limitations)
+17. [Responsible and confidential use](#responsible-and-confidential-use)
+18. [Roadmap](#roadmap)
+19. [Contributing](#contributing)
+20. [Changelog](#changelog)
+21. [License](#license)
+22. [Citation](#citation)
+23. [Credits and acknowledgements](#credits-and-acknowledgements)
+
+---
 
 ## Overview
 
-**peer-review** is a [Claude Skill](https://docs.claude.com) that makes Claude review a
+**scientific-peer-review** is a [Claude Skill](https://docs.claude.com) that makes Claude review a
 scientific manuscript the way an experienced journal referee would. It evaluates scientific
 validity, finds substantive weaknesses, attaches each comment to the **actual passage** of the
 manuscript, explains **why** the problem matters, and proposes **defensible** fixes, while stating
@@ -36,6 +66,11 @@ plainly what it could **not** assess.
 It was designed for **agricultural, plant, soil, genomics and quantitative-biology research**
 (field and greenhouse trials, plant pathology, breeding, stress physiology, phenotyping, remote
 sensing and machine learning, omics), and is adaptable to any other discipline.
+
+It reads **every paragraph, table cell, caption and reference**, reports each confirmed error with the
+exact original wording, a correction and a page/line location, audits the reference list entry by entry
+(missing volume, pages, DOI, publisher), checks image quality, lists what is missing from the manuscript, and
+delivers the result as **Word files** (annotated manuscript + one complete review report).
 
 > **Important:** the output is a **draft for the responsible human reviewer**. It is not a
 > final verdict, and it does not replace subject-matter expertise.
@@ -59,19 +94,48 @@ opposite principles:
 
 ## Features
 
+### Exhaustive line-by-line audit (new in v0.2.0)
+- ✅ **Every paragraph, sentence, table cell and caption** is read; every confirmed error is its own comment
+  with *original text → correction → reason*
+- ✅ Typos, grammar, punctuation, spacing, hyphenation, US/UK mixing, garbled symbols, glued headings
+- ✅ **Unscientific and promotional wording** (e.g. "immense", "superfood", "obviously", "proves"), vague
+  quantities, absolute statements, causal claims on correlational data, template phrases and connector overuse
+- ✅ **Numbers and units**: text vs table mismatches (e.g. 12.93 vs 12.94), wrong units (a length in grams),
+  decimal-place inconsistency, P-value notation, undefined or conflicting abbreviations
+- ✅ **Cross-references**: wrong table numbers, uncited tables/figures, supplement numbering conflicts
+- ✅ Candidate findings come from `lint_text.py`; **every candidate is read and confirmed or rejected**
+
+### Reference and citation audit (new in v0.2.0)
+- ✅ Each entry checked for authors, year, title, journal, **volume, issue, pages/article number, DOI**; book
+  chapters for editors/publisher/pages; reports for publisher/URL
+- ✅ In-text ↔ list cross-check, including "Author et al. [n]" versus entry *n*, uncited entries, out-of-order citation
+- ✅ Odd punctuation, inconsistent DOI/journal-abbreviation style, duplicates, self-citation share, reference age
+- ✅ Procedure for **verifying entries online** (publisher/PubMed/Crossref) with the source recorded; anything not
+  verified is labelled "NOT verified online". Nothing is "corrected" from memory
+
+### Figures, images and tables (new in v0.2.0)
+- ✅ Effective resolution (dpi at printed size), format, colour mode, caption and alt text for every image
+- ✅ Previews are saved so each figure is **actually viewed** (axes, units, dual axes, colour-vision safety, caption vs
+  axis mismatch, text-vs-figure description)
+- ✅ Table logic checks (e.g. recompute h², GCV, GA from the ANOVA table)
+
+### Completeness check (new in v0.2.0)
+- ✅ Lists what is **missing** and should be added: management details, sampling, formulas, software, model and
+  assumptions, limitations, data availability, declarations consistency
+
 ### Review capabilities
--  Nine-stage review workflow (intake → completeness → first pass → technical review →
+- ✅ Nine-stage review workflow (intake → completeness → first pass → technical review →
   cross-check → comment drafting → annotation → QC → deliverables)
--  Claim–evidence map built before any criticism is written
--  Dimensions covered: contribution and novelty, design and methods, statistics and computation,
+- ✅ Claim–evidence map built before any criticism is written
+- ✅ Dimensions covered: contribution and novelty, design and methods, statistics and computation,
   results/tables/figures, discussion and interpretation, references and integrity, structure
   and reporting
--  Design-first statistical review: pseudoreplication, repeated measures, blocking, split-plot,
+- ✅ Design-first statistical review: pseudoreplication, repeated measures, blocking, split-plot,
   multi-environment trials, counts/proportions/ordinal scores, multiple comparisons, effect sizes,
   data leakage and spatial validation in machine learning
--  Internal-consistency pass: abstract ↔ results ↔ conclusions, methods ↔ results, text ↔ tables,
+- ✅ Internal-consistency pass: abstract ↔ results ↔ conclusions, methods ↔ results, text ↔ tables,
   units, degrees of freedom versus design
--  Fatal-versus-fixable reasoning and a transparent recommendation logic
+- ✅ Fatal-versus-fixable reasoning and a transparent recommendation logic
   (Accept / Minor / Major / Reject)
 
 ### Specialist modules (activated only when relevant)
@@ -81,22 +145,29 @@ transcriptomics and bioinformatics · Soil science and sustainable agriculture �
 modelling and reproducible computing · A method for deriving a module for an unfamiliar field
 
 ### Manuscript annotation
--  **Native Word comments** for `.docx`, anchored to the exact quoted words
--  **Highlight annotations with pop-up notes** for text-layer `.pdf` (colour = severity)
--  Original file **never modified**; a byte-identical pristine copy is saved
--  **Anchoring report** stating how each comment was placed
+- ✅ **Native Word comments** for `.docx`, anchored to the exact quoted words
+- ✅ **Highlight annotations with pop-up notes** for text-layer `.pdf` (colour = severity)
+- ✅ Original file **never modified**; a byte-identical pristine copy is saved
+- ✅ **Anchoring report** stating how each comment was placed
   (`exact`, `partial`, `paragraph`, `section`, `page-note`, `unanchored`)
--  Independent **verification script** (author text unchanged, anchors match quotes, no
+- ✅ Independent **verification script** (author text unchanged, anchors match quotes, no
   editor-only comment leaked into the manuscript, optional render test)
--  Page numbers only where reliable; line numbers are **never guessed**
+- ✅ Page numbers only where reliable; line numbers are **never guessed**
 
 ### Integrity safeguards
--  Ledger validator **rejects quotes that are not in the manuscript**
--  Warns when suggested wording contains **numbers not present** in the manuscript
--  Detects near-duplicate comments and severity/certainty mismatches
--  Flags hidden text and **instructions embedded in the manuscript** aimed at AI reviewers
+- ✅ Ledger validator **rejects quotes that are not in the manuscript**
+- ✅ Warns when suggested wording contains **numbers not present** in the manuscript
+- ✅ Detects near-duplicate comments and severity/certainty mismatches
+- ✅ Flags hidden text and **instructions embedded in the manuscript** aimed at AI reviewers
   (treated as untrusted data, never followed)
--  Author-facing and **editor-only (confidential)** comments are kept separate
+- ✅ Author-facing and **editor-only (confidential)** comments are kept separate
+
+### Word deliverables (new in v0.2.0)
+- ✅ `*_annotated.docx` with native comments (page/line from `line_locator.py`)
+- ✅ `*_review_report.docx`: summary, assessment, recommendation, major comments, minor comments,
+  **line-by-line corrections table**, **reference audit table**, **figure/table audit**, **missing-content table**,
+  statistical and reproducibility assessment, limitations, ledger appendix
+- ✅ Separate confidential `*_editor_note.docx`
 
 ### Statistics checker
 `stat_checks.py` verifies numerical complaints before they are written: recompute a P-value from a
@@ -142,6 +213,8 @@ Detailed review guidance is split into reference files that Claude loads **only 
 |---|---|---|
 | Claude with **code execution and file creation** (Claude.ai) or **Claude Code** | Running scripts and producing files | Chat-only mode still works, delivering the ledger as text |
 | Python **3.9+** | All scripts | |
+| `Pillow` | `image_audit.py` | |
+| `pyspellchecker` *(optional)* | `lint_text.py --spell` | |
 | `python-docx >= 1.2` | DOCX annotation (native comments) | |
 | `scipy` | `stat_checks.py` | |
 | `PyMuPDF` *(optional)* | PDF annotation and verification | **AGPL-3.0** licensed; see [NOTICE.md](NOTICE.md) |
@@ -171,14 +244,14 @@ git clone https://github.com/YOUR-USER/scientific-peer-review.git \
 
 ### Install script dependencies
 ```bash
-pip install "python-docx>=1.2" scipy
-pip install pymupdf        # optional, PDF support only
+pip install "python-docx>=1.2" scipy pillow pyspellchecker
+pip install pymupdf        # PDF support and page/line numbers
 ```
 
 ### Verify the installation
 ```bash
 cd scientific-peer-review
-python -m unittest discover -s tests -v    # expect: Ran 15 tests ... OK
+python -m unittest discover -s tests -v    # expect: Ran 25 tests ... OK
 ```
 
 ---
@@ -215,8 +288,16 @@ Run from the skill folder. Replace `paper.docx` and `ledger.json` with your file
 # 1. Extract a block map (IDs, sections, warnings)
 python scripts/extract_manuscript.py paper.docx --out-dir work
 
+# 1b. Line-level, reference and image audits (candidates to confirm by reading)
+python scripts/lint_text.py work/paper.map.json --out work/candidates.json --spell
+python scripts/audit_references.py work/paper.map.json --out work/refs_audit.json --authors "Surname1,Surname2"
+python scripts/image_audit.py paper.docx --out work/images_audit.json --preview-dir work/previews
+
 # 2. Validate the ledger against the manuscript (quotes must exist)
 python scripts/ledger.py validate ledger.json --map work/paper.map.json
+
+# 2b. Add page and line numbers from a rendered copy
+python scripts/line_locator.py paper.docx ledger.json --out ledger.located.json
 
 # 3. Insert comments (DOCX) or highlights (PDF)
 python scripts/annotate_docx.py paper.docx ledger.json --out-dir out
@@ -226,6 +307,12 @@ python scripts/annotate_pdf.py  paper.pdf  ledger.json --out-dir out
 python scripts/verify_annotations.py --original paper.docx \
     --annotated out/paper_annotated.docx --ledger ledger.json \
     --report out/paper_anchoring_report.json --render
+
+# 4b. Build the complete Word review report (and the editor note)
+python scripts/build_report_docx.py --ledger ledger.located.json --report report.json \
+    --refs work/refs_audit.json --images work/images_audit.json --out out/paper_review_report.docx
+python scripts/build_report_docx.py --ledger ledger.located.json --report report.json \
+    --audience editor --out out/paper_editor_note.docx
 
 # 5. Render the ledger for authors
 python scripts/ledger.py render ledger.json --md out/ledger.md --csv out/ledger.csv --audience author
@@ -241,6 +328,11 @@ python scripts/stat_checks.py pvalue --test F --stat 2.91 --df1 3 --df2 20 --rep
 | Script | Purpose | Key options |
 |---|---|---|
 | `extract_manuscript.py` | DOCX / PDF / MD / TXT → block map with IDs, sections and warnings (tracked changes, existing comments, hidden text, scanned PDFs, embedded instructions) | `--out-dir` |
+| `lint_text.py` | Candidate line-level findings: spacing, repeated words, tone, causal claims, abbreviations, units, cross-references, text↔table number near-misses, spelling | `--spell`, `--out` |
+| `audit_references.py` | Reference completeness, in-text↔list and author↔number cross-check, duplicates, age, self-citation | `--authors`, `--submission-year` |
+| `image_audit.py` | Effective dpi, format, caption, alt text; PNG previews | `--preview-dir` |
+| `line_locator.py` | Page and line numbers from a rendered copy (LibreOffice) or the supplied PDF | `--out` |
+| `build_report_docx.py` | The complete Word review report, or the editor note | `--refs`, `--images`, `--audience` |
 | `ledger.py validate` | Schema check; rejects quotes not found in the manuscript; warns on invented numbers, near-duplicates, severity mismatches | `--map` |
 | `ledger.py render` | Markdown and CSV from the ledger | `--md`, `--csv`, `--audience` |
 | `annotate_docx.py` | Native Word comments anchored to quoted words; original untouched; anchoring report | `--out-dir`, `--author`, `--initials` |
@@ -322,6 +414,10 @@ scientific-peer-review/
 │   ├── review-framework.md          # Dimensions A–G, consistency checks, recommendation logic
 │   ├── statistical-review.md        # Design-first statistics, ML/computational review
 │   ├── specialist-modules.md        # Discipline modules + how to derive new ones
+│   ├── line-by-line-audit.md        # Exhaustive mode: per-paragraph checklist, tone, numbers, abbreviations
+│   ├── reference-audit.md           # Entry completeness, cross-check, online verification
+│   ├── figure-table-audit.md        # Image quality, figure content, tables
+│   ├── completeness-checklist.md    # What is missing and should be added
 │   ├── comment-writing-guide.md     # Fields, severity/status, strong vs weak comments
 │   ├── manuscript-annotation.md     # Formats, locators, anchoring limits, fallback
 │   ├── literature-and-integrity.md  # Retrieval discipline, citations, retractions, ethics
@@ -333,13 +429,20 @@ scientific-peer-review/
 │   ├── annotate_docx.py
 │   ├── annotate_pdf.py
 │   ├── verify_annotations.py
-│   └── stat_checks.py
+│   ├── stat_checks.py
+│   ├── lint_text.py
+│   ├── audit_references.py
+│   ├── image_audit.py
+│   ├── line_locator.py
+│   └── build_report_docx.py
 ├── tests/
-│   └── test_scripts.py              # 15 automated tests
+│   ├── test_scripts.py              # 15 tests: stats, ledger, annotation, verification, PDF
+│   └── test_audits.py               # 10 tests: linter, references, images, Word report, locator
 ├── examples/                        # SYNTHETIC data only
 │   ├── sample_manuscript.docx
 │   ├── sample_ledger.json / .md / .csv
-│   ├── sample_review_report.md
+│   ├── sample_review_report.md / .docx   # Word report example
+│   ├── sample_report.json
 │   ├── sample_answer_key.md
 │   ├── make_sample_manuscript.py
 │   ├── annotated/                   # Annotated DOCX, original copy, anchoring report
@@ -384,37 +487,45 @@ manuscript is included.
 python -m unittest discover -s tests -v
 ```
 
-**15 automated tests** cover: P-value recomputation (including a planted error), GRIM, expected
+**25 automated tests** cover: P-value recomputation (including a planted error), GRIM, expected
 degrees of freedom, CLI exit codes, extraction, ledger validation (invented quotes rejected),
 DOCX annotation (exact anchoring across split runs, tables, typographic quotes, editor-comment
 exclusion, original untouched), verification (including a **tampered file that must fail**),
-LibreOffice rendering, and a PDF round trip.
+LibreOffice rendering, a PDF round trip, the line-level linter (planted problems **and a clean-text negative
+control**), reference completeness and cross-checks, effective-dpi calculation, Word report content with
+author/editor separation, a run-splitting regression, and page/line location.
 
-Testing also found and fixed five bugs before release (listed in
+Testing also found and fixed fourteen bugs across v0.1.0 and v0.2.0 (listed in
 [`docs/QA_REPORT.md`](docs/QA_REPORT.md)).
 
 ---
 
 ## Testing status and known limitations
 
-This is an **early release (v0.1.0)**. Please read this section before relying on the skill.
+This is an **early release (v0.2.0)**. Please read this section before relying on the skill.
 
 **Verified**
-- Script behaviour (15/15 tests passing)
+- Script behaviour (25/25 tests passing)
+- A full exhaustive run on one **real manuscript** (supplied for testing; not included in this repository):
+  143 comments, all quotes validated, 141 comments placed as Word comments (140 exact), independent verification
+  passed, 29-page Word report inspected visually; two references verified against journal records
 - End-to-end workflow on one synthetic manuscript (13/13 DOCX comments anchored exactly; PDF
   12 exact + 1 partial; verification passed; rendering inspected visually)
 
 **Not yet verified**
-- Review quality on **real manuscripts** (the synthetic test was designed and reviewed by the same
-  author, so it is a smoke test, not independent validation)
+- Review quality against **human referees**: both tests (synthetic and real) were run by the skill's author,
+  so they show the workflow and tooling work, not independent validation; false-positive rate not measured
 - Opening annotated files in **Microsoft Word** (tested with python-docx and LibreOffice)
 - Two-column journal PDFs and scanned PDFs
 - Automatic triggering of the skill from the description
 - Subagent / multi-lens mode
 
 **Known limitations**
-- Figures and images are not read by the scripts; Claude must render and view them, or state that
-  they were not assessed
+- Figures are not *understood* by the scripts: image quality is measured, but legibility and content require
+  viewing the previews (the skill requires this and records which figures were viewed)
+- Reference correctness can only be confirmed with web access; without it findings are marked
+  "not verified online". Typically only a subset of references is checked online
+- Linter output is **candidates**; patterns can misfire (e.g. cultivar names, equation placeholders)
 - Text boxes, footnotes and equations are not anchored; runs containing tabs, breaks or images are
   anchored whole
 - Literature and novelty checks require web search; otherwise they are reported as not done
@@ -442,7 +553,8 @@ Full details: [`docs/QA_REPORT.md`](docs/QA_REPORT.md).
 
 ## Roadmap
 
-- [ ] Evaluate on real manuscripts, including sound published papers, and measure the false-positive rate
+- [ ] Evaluate on several real manuscripts, including sound published papers, and measure the false-positive rate
+- [ ] Optional Crossref/PubMed lookup script for networked environments (currently verification is manual via web search)
 - [ ] Compare severity and coverage against expert reviews
 - [ ] Test annotated files in Microsoft Word and Google Docs
 - [ ] Support two-column PDF layouts and tracked-change suggestions
@@ -471,6 +583,15 @@ documents (attach only material you are permitted to share).
 
 ## Changelog
 
+### v0.2.0
+- **Exhaustive line-by-line mode** (default for full reviews): every paragraph, table cell, caption and reference
+- New references: line-by-line audit, reference audit, figure/table audit, completeness checklist
+- New scripts: `lint_text.py`, `audit_references.py`, `image_audit.py`, `line_locator.py`, `build_report_docx.py`
+- Complete Word report and editor note; page/line numbers from a rendered copy
+- Fix: runs starting with `w:lastRenderedPageBreak` are now split exactly; residual over-wide anchors are reported
+  as `run-expanded` instead of "exact"
+- 25 automated tests
+
 ### v0.1.0 (first release)
 - Nine-stage review workflow and eight reference documents
 - Six tested scripts: extraction, ledger, DOCX annotation, PDF annotation, verification, statistics checks
@@ -497,8 +618,8 @@ If you use this skill in your work, please cite:
   author  = {Chapagain, Sujan},
   title   = {scientific-peer-review: an evidence-grounded Claude Skill for scientific manuscript peer review},
   year    = {2026},
-  version = {0.1.0},
-  url     = {https://github.com/chapagainsujan/peer-review}
+  version = {0.2.0},
+  url     = {https://github.com/YOUR-USER/scientific-peer-review}
 }
 ```
 
