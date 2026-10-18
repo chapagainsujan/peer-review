@@ -1,5 +1,7 @@
 # Notice and attribution
 
+**Author and maintainer: Sujan Chapagain.**
+
 This skill was designed by auditing four open-source repositories supplied by the user. **No
 source code or prompt text was copied verbatim**; ideas were adapted, rewritten and in several
 cases deliberately rejected (see `docs/SOURCE_INVENTORY_AND_SYNTHESIS.md`). Each source is MIT
@@ -21,7 +23,7 @@ pseudoreplication; Benjamini and Hochberg 1995 on false-discovery-rate control; 
 Heathers 2017 on the GRIM test). Their names are included as pointers, not as quotations.
 
 ## Third-party dependencies (not bundled)
-- python-docx (MIT), scipy (BSD), lxml/PyYAML (BSD/MIT) - permissive.
+- python-docx (MIT), scipy (BSD), Pillow (HPND), pyspellchecker (MIT), lxml/PyYAML (BSD/MIT) - permissive.
 - **PyMuPDF (AGPL-3.0, or commercial licence from Artifex)** - optional, used only by
   `annotate_pdf.py` and PDF verification. Using it in internal workflows is fine; if you
   redistribute a *product* that bundles it, check the AGPL terms or obtain a commercial licence.
